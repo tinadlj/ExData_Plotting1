@@ -1,0 +1,13 @@
+householdData<-read.table("Exploratory Data Analysis/household_power_consumption.txt",head=TRUE,sep=";",na.strings="?",stringsAsFactors=FALSE)
+householdData$DateTime<-paste(householdData$Date,householdData$Time)
+householdData$DateTime<-strptime(householdData$DateTime,format="%d/%m/%Y %H:%M:%S")
+householdData$Date<-as.Date(householdData$DateTime)
+plotData<-householdData[which(householdData$Date=="2007-02-01" | householdData$Date=="2007-02-02"),]
+png(file="plot3.png",width=480,height=480,units="px")
+plot(plotData$DateTime,plotData$Sub_metering_1,pch=".",type="o",ylab="Energy Sub Metering",xlab="",col="black")
+png(file="plot3.png",width=480,height=480,units="px")
+with(plotData,plot(DateTime,Sub_metering_1,pch=".",type="o",ylab="Energy Sub Metering",xlab=""))
+with(plotData,points(DateTime,Sub_metering_2,pch=".",type="o",col="red"))
+with(plotData,points(DateTime,Sub_metering_3,pch=".",type="o",col="blue"))
+legend("topright",legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),lty=1,lwd=1,col=c("black","red","blue"),ncol=1,cex=0.8,bty="1",inset=c(0,0),text.col=c("black"))
+dev.off()
